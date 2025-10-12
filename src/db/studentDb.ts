@@ -3,6 +3,7 @@ import sqlite3 from "sqlite3";
 import type StudentInterface from "@/types/StudentInterface";
 import getRandomFio from "@/utils/getRandomFio";
 import FioInterface from "@/types/FioInterface";
+import CreateStudentDto from "@/dto/CreateStudentDto";
 
 sqlite3.verbose();
 
@@ -27,6 +28,66 @@ export const getStudentsDb = async (): Promise<StudentInterface[]> => {
   });
 
   return students as StudentInterface[];
+};
+
+export const createStudentDb = async (
+  dto: CreateStudentDto
+): Promise<StudentInterface | null> => {
+  const db = new sqlite3.Database(process.env.DB ?? "./db/vki-web.db");
+
+  try {
+    const studentId = await new Promise<number>((resolve, reject) => {
+      const insertSql = `
+        INSERT INTO student (firstName, lastName, middleName, groupId)
+        VALUES (?, ?, ?, ?)
+      `;
+      const params = [dto.firstName, dto.lastName, dto.middleName, dto.groupId];
+
+      db.run(insertSql, params, function (err) {
+        if (err) {
+          console.error("Ошибка при вставке студента:", err.message);
+          reject(err);
+          return;
+        }
+        resolve(this.lastID);
+      });
+    });
+
+    const createdStudent = await new Promise<StudentInterface | null>(
+      (resolve, reject) => {
+        const selectSql = `
+        SELECT id, firstName, lastName, middleName, groupId FROM student
+        WHERE id = ?
+      `;
+
+        db.get(selectSql, [studentId], (err, row: StudentInterface) => {
+          if (err) {
+            console.error(
+              "Ошибка при получении созданного студента:",
+              err.message
+            );
+            reject(err);
+            return;
+          }
+          if (row) {
+            resolve(row);
+          } else {
+            console.warn(
+              `Не удалось найти студента с ID ${studentId} после успешной вставки.`
+            );
+            resolve(null);
+          }
+        });
+      }
+    );
+
+    return createdStudent;
+  } catch (error) {
+    console.error(">>> createStudentDb", error);
+    return null; // В случае любой ошибки возвращаем null
+  } finally {
+    db.close(); // Всегда закрываем базу данных
+  }
 };
 
 /**

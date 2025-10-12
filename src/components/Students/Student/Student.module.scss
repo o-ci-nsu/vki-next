@@ -16,3 +16,8 @@
     transition: opacity 0.5s ease-in-out, display 0.5s ease-in-out;
   }
 }
+
+.--isCreating {
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
