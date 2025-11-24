@@ -8,7 +8,6 @@ interface BackNavigationProps {
 
 const BackNavigation = ({ href, text }: BackNavigationProps): React.ReactElement => (
   <Link href={href} className={styles.BackNavigation}>
-    {'<< '}
     {text}
   </Link>
 );

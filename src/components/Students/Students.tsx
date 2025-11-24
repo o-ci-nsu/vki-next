@@ -36,11 +36,15 @@ const Students = (): React.ReactElement => {
 
   return (
     <div className={styles.Groups}>
-      <AddStudentForm createStudentMutate={onAddHandler} />
-      <div>
-        {students.map((student: StudentInterface, i: number) => (
-          <Student key={i} student={student} onDelete={onDeleteHandler} />
-        ))}
+      <div className={styles.mainContent}>
+        <AddStudentForm createStudentMutate={onAddHandler} />
+      </div>
+      <div className={styles.sidebar}>
+        <div className={styles.studentsContainer}>
+          {students.map((student: StudentInterface, i: number) => (
+            <Student key={i} student={student} onDelete={onDeleteHandler} />
+          ))}
+        </div>
       </div>
     </div>
   );

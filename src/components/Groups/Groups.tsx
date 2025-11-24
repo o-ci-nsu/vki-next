@@ -10,9 +10,11 @@ const Groups = (): React.ReactElement => {
 
   return (
     <div className={styles.Groups}>
-      {groups.map((group: GroupInterface) => (
-        <Group key={group.id} group={group} />
-      ))}
+      <div className={styles.groupsGrid}>
+        {groups.map((group: GroupInterface) => (
+          <Group key={group.id} group={group} />
+        ))}
+      </div>
     </div>
   );
 };

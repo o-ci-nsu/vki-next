@@ -1,11 +1,23 @@
 .BackNavigation {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: #0070f3;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary);
   text-decoration: none;
   font-size: 0.9rem;
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-medium);
+  transition: all 0.2s ease;
   
   &:hover {
-    text-decoration: underline;
+    background: var(--primary-light);
+    color: var(--primary-hover);
+  }
+  
+  &::before {
+    content: '←';
+    font-size: 1.2rem;
   }
 }

@@ -7,32 +7,42 @@ interface Props {
 }
 
 const Student = ({ student }: Props): React.ReactElement => (
-  <div className={`${styles.Student}`}>
+  <div className={styles.Student}>
     <BackNavigation href="/students" text="список студентов" />
 
-    <h1>{`${student.lastName} ${student.firstName} ${student.middleName}`}</h1>
-
-    <div className={styles.row}>
-      <div>ИД:</div>
-      <div>{student.id}</div>
-    </div>
-    <div className={styles.row}>
-      <div>Группа:</div>
-      <div>{student?.group?.name}</div>
-    </div>
-    <div className={styles.row}>
-      <div>Фамилия:</div>
-      <div>{student?.lastName}</div>
-    </div>
-    <div className={styles.row}>
-      <div>Имя:</div>
-      <div>{student?.firstName}</div>
-    </div>
-    <div className={styles.row}>
-      <div>Отчество:</div>
-      <div>{student?.middleName}</div>
+    <div className={styles.profileHeader}>
+      <div className={styles.avatar}>👤</div>
+      <h1>{`${student.lastName} ${student.firstName} ${student.middleName}`}</h1>
     </div>
 
+    <div className={styles.studentCard}>
+      <div className={styles.row}>
+        <div className={styles.label}>ИД:</div>
+        <div className={styles.value}>{student.id}</div>
+      </div>
+      <div className={styles.row}>
+        <div className={styles.label}>Группа:</div>
+        <div className={styles.value}>{student?.group?.name || 'Не указана'}</div>
+      </div>
+      <div className={styles.row}>
+        <div className={styles.label}>Фамилия:</div>
+        <div className={styles.value}>{student?.lastName}</div>
+      </div>
+      <div className={styles.row}>
+        <div className={styles.label}>Имя:</div>
+        <div className={styles.value}>{student?.firstName}</div>
+      </div>
+      <div className={styles.row}>
+        <div className={styles.label}>Отчество:</div>
+        <div className={styles.value}>{student?.middleName}</div>
+      </div>
+      {student?.contacts && (
+        <div className={styles.row}>
+          <div className={styles.label}>Контакты:</div>
+          <div className={styles.value}>{student.contacts}</div>
+        </div>
+      )}
+    </div>
   </div>
 );
 

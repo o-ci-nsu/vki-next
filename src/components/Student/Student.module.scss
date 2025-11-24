@@ -1,19 +1,88 @@
 .Student {
-  padding: 1rem;
-  
-  h1 {
-    margin: 1rem 0;
-    color: white;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.Student h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 32px 0;
+  color: #202124;
+  text-align: center;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  font-size: 3rem;
+  background: #e8f0fe;
+  border-radius: 50%;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(60, 64, 67, 0.15);
+}
+
+.studentCard {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 8px rgba(60, 64, 67, 0.15);
+  margin-top: 32px;
 }
 
 .row {
-  margin: 10px 0;
-  display: grid;
-  grid-template-columns: 120px auto;
-  gap: 1rem;
-  color: white;
-  div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #e8eaed;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .label {
     font-weight: 600;
+    color: #5f6368;
+    min-width: 120px;
+  }
+  
+  .value {
+    color: #3c4043;
+    font-weight: 500;
+    text-align: right;
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .Student {
+    padding: 16px;
+  }
+  
+  .Student h1 {
+    font-size: 2rem;
+  }
+  
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    
+    .label {
+      min-width: auto;
+    }
+    
+    .value {
+      text-align: left;
+    }
   }
 }
