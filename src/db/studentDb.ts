@@ -1,7 +1,7 @@
-import { Student } from './entity/Student.entity';
-import type StudentInterface from '@/types/StudentInterface';
-import getRandomFio from '@/utils/getRandomFio';
-import AppDataSource from './AppDataSource';
+import { Student } from "./entity/Student.entity";
+import type StudentInterface from "@/types/StudentInterface";
+import getRandomFio from "@/utils/getRandomFio";
+import AppDataSource from "./AppDataSource";
 
 const studentRepository = AppDataSource.getRepository(Student);
 
@@ -10,7 +10,7 @@ const studentRepository = AppDataSource.getRepository(Student);
  * @returns Promise<StudentInterface[]>
  */
 export const getStudentsDb = async (): Promise<StudentInterface[]> => {
-  const students = await studentRepository.find({ relations: ['group'] });
+  const students = await studentRepository.find({ relations: ["group"] });
   return students as StudentInterface[];
 };
 
@@ -22,7 +22,7 @@ export const getStudentsDb = async (): Promise<StudentInterface[]> => {
 export const getStudentByIdDb = async (id: number): Promise<Student | null> => {
   return await studentRepository.findOne({
     where: { id },
-    relations: ['group'],
+    relations: ["group"],
   });
 };
 
@@ -41,7 +41,9 @@ export const deleteStudentDb = async (studentId: number): Promise<number> => {
  * @param studentField поля студента
  * @returns Promise<StudentInterface>
  */
-export const addStudentDb = async (studentFields: Omit<StudentInterface, 'id'>): Promise<StudentInterface> => {
+export const addStudentDb = async (
+  studentFields: Omit<StudentInterface, "id">
+): Promise<StudentInterface> => {
   const student = new Student();
   const newStudent = await studentRepository.save({
     ...student,
@@ -57,7 +59,9 @@ export const addStudentDb = async (studentFields: Omit<StudentInterface, 'id'>):
  * @param amount количество рандомных записей
  * @returns Promise<StudentInterface>
  */
-export const addRandomStudentsDb = async (amount: number = 10): Promise<StudentInterface[]> => {
+export const addRandomStudentsDb = async (
+  amount: number = 10
+): Promise<StudentInterface[]> => {
   const students: StudentInterface[] = [];
 
   for (let i = 0; i < amount; i++) {
@@ -65,7 +69,7 @@ export const addRandomStudentsDb = async (amount: number = 10): Promise<StudentI
 
     const newStudent = await addStudentDb({
       ...fio,
-      contacts: 'contact',
+      contacts: "contact",
       groupId: Math.floor(Math.random() * 4) + 1,
     });
     students.push(newStudent);

@@ -10,6 +10,7 @@ interface StudentInterface {
   groupId: number;
   isDeleted?: boolean;
   isNew?: boolean;
+  isCreating?: boolean;
   group?: GroupInterface;
 };
 

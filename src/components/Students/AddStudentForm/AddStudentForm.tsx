@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import CreateStudentDto from '@/dto/CreateStudentDto';
+import useGroups from '@/hooks/useGroups';
 import styles from './AddStudentForm.module.scss';
 
 interface StudentCreatorFormProps {
@@ -8,6 +9,7 @@ interface StudentCreatorFormProps {
 }
 
 export const AddStudentForm = ({ createStudentMutate }: StudentCreatorFormProps) => {
+  const { groups } = useGroups();
   const {
     register,
     handleSubmit,
@@ -69,18 +71,21 @@ export const AddStudentForm = ({ createStudentMutate }: StudentCreatorFormProps)
         </div>
 
         <div className={styles.FormGroup}>
-          <label>ID Группы:</label>
-          <input
-            type="number"
+          <label>Группа:</label>
+          <select
             className={errors.groupId ? styles.error : ''}
             {...register('groupId', {
-              required: 'ID группы обязателен',
-              valueAsNumber: true,
-              min: { value: 1, message: 'ID группы должен быть не менее 1' },
-              max: { value: 9999, message: 'ID группы не должен превышать 9999' }
+              required: 'Выберите группу',
+              valueAsNumber: true
             })}
-            placeholder="Введите ID группы"
-          />
+          >
+            <option value="">Выберите группу</option>
+            {groups.map((group) => (
+              <option key={group.id} value={group.id}>
+                {group.name}
+              </option>
+            ))}
+          </select>
           {errors.groupId && <span className={styles.ErrorMessage}>{errors.groupId.message}</span>}
         </div>
 

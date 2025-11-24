@@ -27,12 +27,14 @@
       color: var(--color4);
     }
 
-    input {
+    input,
+    select {
       padding: 10px;
       border: 1px solid var(--color2);
       border-radius: 4px;
       font-size: 14px;
       transition: border-color 0.3s ease;
+      background-color: white;
 
       &:focus {
         outline: none;
@@ -42,6 +44,10 @@
       &.error {
         border-color: #e74c3c;
       }
+    }
+
+    select {
+      cursor: pointer;
     }
 
     .ErrorMessage {

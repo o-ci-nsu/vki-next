@@ -2,6 +2,7 @@
 
 import useGroups from '@/hooks/useGroups';
 import type GroupInterface from '@/types/GroupInterface';
+import Group from './Group/Group';
 import styles from './Groups.module.scss';
 
 const Groups = (): React.ReactElement => {
@@ -10,9 +11,7 @@ const Groups = (): React.ReactElement => {
   return (
     <div className={styles.Groups}>
       {groups.map((group: GroupInterface) => (
-        <h2 key={group.id}>
-          {group.name}
-        </h2>
+        <Group key={group.id} group={group} />
       ))}
     </div>
   );

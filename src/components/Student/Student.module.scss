@@ -1,0 +1,19 @@
+.Student {
+  padding: 1rem;
+  
+  h1 {
+    margin: 1rem 0;
+    color: white;
+  }
+}
+
+.row {
+  margin: 10px 0;
+  display: grid;
+  grid-template-columns: 120px auto;
+  gap: 1rem;
+  color: white;
+  div:first-child {
+    font-weight: 600;
+  }
+}

@@ -19,7 +19,7 @@ const useStudents = (): StudentsHookInterface => {
   const { data } = useQuery({
     queryKey: ["students"],
     queryFn: () => getStudentsApi(),
-    enabled: false,
+    enabled: true,
   });
 
   /**
@@ -49,11 +49,18 @@ const useStudents = (): StudentsHookInterface => {
         ["students"],
         updatedStudents
       );
+      console.log(
+        "deleteStudentMutate onMutate",
+        previousStudents,
+        updatedStudents
+      );
+      debugger;
 
       return { previousStudents, updatedStudents };
     },
     onError: (err, variables, context) => {
-      console.log(">>> deleteStudentMutate  err", err);
+      console.log("deleteStudentMutate  err", err);
+      debugger;
       queryClient.setQueryData<StudentInterface[]>(
         ["students"],
         context?.previousStudents
@@ -61,6 +68,8 @@ const useStudents = (): StudentsHookInterface => {
     },
     // обновляем данные в случаи успешного выполнения mutationFn: async (studentId: number) => deleteStudentApi(studentId),
     onSuccess: async (studentId, variables, { previousStudents }) => {
+      console.log("deleteStudentMutate  onSuccess", studentId);
+      debugger;
       await queryClient.cancelQueries({ queryKey: ["students"] });
       // вариант 1 - запрос всех записей
       // refetch();
@@ -104,6 +113,7 @@ const useStudents = (): StudentsHookInterface => {
         ["students"],
         (oldStudents) => [...(oldStudents ?? []), optimisticStudent]
       );
+
       return { previousStudents, optimisticStudent };
     },
     onError: (err, variables, context) => {
