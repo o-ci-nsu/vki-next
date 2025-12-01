@@ -7,12 +7,14 @@ import type GroupInterface from "@/types/GroupInterface";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import Main from "@/components/layout/Main/Main";
+import { verifyAccessToken } from "@/utils/jwt";
 
 import type { Metadata } from "next";
 
 import "@/styles/globals.scss";
 import StudentInterface from "@/types/StudentInterface";
 import { getStudentsApi } from "@/api/studentsApi";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Вэб разработка ВКИ - Next.js шаблон",
@@ -23,6 +25,12 @@ export const metadata: Metadata = {
 const RootLayout = async ({
   children,
 }: Readonly<{ children: React.ReactNode }>): Promise<React.ReactElement> => {
+  const cookieStore = await cookies();
+
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const userFromServer = verifyAccessToken(accessToken);
+
   let groups: GroupInterface[];
   let students: StudentInterface[];
 
@@ -50,7 +58,7 @@ const RootLayout = async ({
     <TanStackQuery state={state}>
       <html lang="ru">
         <body>
-          <Header />
+          <Header userFromServer={userFromServer} />
           <Main>
             <>{children}</>
           </Main>
