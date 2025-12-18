@@ -1,27 +1,28 @@
-import AppDataSource from "@/db/AppDataSource";
-import { Student } from "@/db/entity/Student.entity";
-import type StudentInterface from "@/types/StudentInterface";
-import getRandomFio from "@/utils/getRandomFio";
+import AppDataSource from '@/db/AppDataSource';
+import { Student } from '@/db/entity/Student.entity';
+import type StudentInterface from '@/types/StudentInterface';
+import getRandomFio from '@/utils/getRandomFio';
 
 export class StudentService {
   private get repository(): ReturnType<typeof AppDataSource.getRepository> {
     // Check if AppDataSource is initialized
-    if (!AppDataSource.isInitialized) {
-      throw new Error("AppDataSource is not initialized");
-    }
+    // if (!AppDataSource.isInitialized) {
+    //   throw new Error('AppDataSource is not initialized');
+    // }
+    // await dbInit();
     return AppDataSource.getRepository(Student);
   }
 
   async getStudents(): Promise<StudentInterface[]> {
-    const students = await this.repository.find({ relations: ["group"] });
+    const students = await this.repository.find({ relations: ['group'] });
     return students as StudentInterface[];
   }
 
   async getStudentById(id: number): Promise<Student | null> {
-    return (await this.repository.findOne({
+    return await this.repository.findOne({
       where: { id },
-      relations: ["group"],
-    })) as Student | null;
+      relations: ['group'],
+    }) as Student | null;
   }
 
   async deleteStudent(studentId: number): Promise<number> {
@@ -29,9 +30,7 @@ export class StudentService {
     return studentId;
   }
 
-  async addStudent(
-    studentFields: Omit<StudentInterface, "id">
-  ): Promise<StudentInterface> {
+  async addStudent(studentFields: Omit<StudentInterface, 'id'>): Promise<StudentInterface> {
     const student = new Student();
     const newStudent = await this.repository.save({
       ...student,
@@ -48,7 +47,7 @@ export class StudentService {
 
       const newStudent = await this.addStudent({
         ...fio,
-        contacts: "contact",
+        contacts: 'contact',
         groupId: Math.floor(Math.random() * 4) + 1,
       });
       students.push(newStudent);
